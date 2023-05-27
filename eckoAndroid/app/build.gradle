@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'edu.uci.ics.fabflixmobile'
+    namespace 'ecko-mobile'
     compileSdk 33
 
     defaultConfig {
-        applicationId "edu.uci.ics.fabflixmobile"
+        applicationId "ecko-mobile"
         minSdkVersion 33
         targetSdkVersion 33
         versionCode 1

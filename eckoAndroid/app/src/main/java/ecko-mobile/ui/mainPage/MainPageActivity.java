@@ -1,4 +1,4 @@
-package edu.uci.ics.fabflixmobile.ui.mainPage;
+package ecko-mobile.ui.mainPage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
