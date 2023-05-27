@@ -1,7 +1,6 @@
-package edu.uci.ics.fabflixmobile.data;
+package com.eckomobile.data;
 
 import android.content.Context;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 

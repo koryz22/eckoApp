@@ -1,9 +1,7 @@
-package edu.uci.ics.fabflixmobile.data.model;
+package com.eckomobile.data.model;
 
-import android.util.Log;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
 
 /**
  * Movie class that captures movie information for movies retrieved from MovieListActivity

@@ -1,31 +1,19 @@
-package edu.uci.ics.fabflixmobile.ui.singlemovie;
+package com.eckomobile.ui.singlemovie;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Button;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
-
+import android.util.Log;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import edu.uci.ics.fabflixmobile.R;
-import edu.uci.ics.fabflixmobile.data.NetworkManager;
-import edu.uci.ics.fabflixmobile.data.model.Movie;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.eckomobile.R;
+import com.eckomobile.data.NetworkManager;
+import com.eckomobile.data.model.Movie;
 
 public class SingleMovieActivity extends AppCompatActivity {
     private String movieId;
@@ -33,7 +21,7 @@ public class SingleMovieActivity extends AppCompatActivity {
     private TextView titleEle, yearEle, ratingEle, starsEle, genresEle, directorEle;
     private final String host = "10.0.2.2";
     private final String port = "8080";
-    private final String domain = "eckoBackend_war";
+    private final String domain = "cs122b_project1_api_example_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

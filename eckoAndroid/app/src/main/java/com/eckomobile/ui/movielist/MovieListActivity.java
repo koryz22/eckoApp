@@ -1,34 +1,25 @@
-package edu.uci.ics.fabflixmobile.ui.movielist;
+package com.eckomobile.ui.movielist;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import edu.uci.ics.fabflixmobile.R;
-import edu.uci.ics.fabflixmobile.data.NetworkManager;
-import edu.uci.ics.fabflixmobile.data.model.Movie;
-import edu.uci.ics.fabflixmobile.ui.mainPage.MainPageActivity;
-import edu.uci.ics.fabflixmobile.ui.singlemovie.SingleMovieActivity;
+import com.eckomobile.R;
+import com.eckomobile.data.NetworkManager;
+import com.eckomobile.data.model.Movie;
+import com.eckomobile.ui.singlemovie.SingleMovieActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MovieListActivity extends AppCompatActivity {
     private String userInput;
@@ -37,7 +28,7 @@ public class MovieListActivity extends AppCompatActivity {
     private TextView pageCnt;
     private final String host = "10.0.2.2";
     private final String port = "8080";
-    private final String domain = "eckoBackend_war";
+    private final String domain = "cs122b_project1_api_example_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
     private final String queryUrl = "&year=&director=&starName=&genre=";
     private final String pUrl = "&n=10&sortOption=truu&arrow=prev";

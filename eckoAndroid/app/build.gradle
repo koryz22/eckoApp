@@ -4,11 +4,15 @@ plugins {
 }
 
 android {
-    namespace 'ecko-mobile'
+    namespace 'com.eckomobile'
     compileSdk 33
 
+    dataBinding{
+        enabled = true
+    }
+
     defaultConfig {
-        applicationId "ecko-mobile"
+        applicationId "com.eckomobile"
         minSdkVersion 33
         targetSdkVersion 33
         versionCode 1

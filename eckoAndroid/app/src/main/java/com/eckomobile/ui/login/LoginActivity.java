@@ -1,6 +1,5 @@
-package edu.uci.ics.fabflixmobile.ui.login;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+package com.eckomobile.ui.login;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import edu.uci.ics.fabflixmobile.data.NetworkManager;
-import edu.uci.ics.fabflixmobile.databinding.ActivityLoginBinding;
-import edu.uci.ics.fabflixmobile.ui.mainPage.MainPageActivity;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.eckomobile.data.NetworkManager;
+import com.eckomobile.ui.mainPage.MainPageActivity;
+
+import com.eckomobile.databinding.ActivityLoginBinding;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView message;
     private final String host = "10.0.2.2";
     private final String port = "8080";
-    private final String domain = "eckoBackend_war";
+    private final String domain = "cs122b_project1_api_example_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
 
     @Override

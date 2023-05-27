@@ -1,7 +1,4 @@
-package edu.uci.ics.fabflixmobile.ui.movielist;
-
-import edu.uci.ics.fabflixmobile.R;
-import edu.uci.ics.fabflixmobile.data.model.Movie;
+package com.eckomobile.ui.movielist;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.eckomobile.R;
+import com.eckomobile.data.model.Movie;
 
 import java.util.ArrayList;
 
