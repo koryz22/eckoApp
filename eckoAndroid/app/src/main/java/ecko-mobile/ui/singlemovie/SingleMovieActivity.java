@@ -33,7 +33,7 @@ public class SingleMovieActivity extends AppCompatActivity {
     private TextView titleEle, yearEle, ratingEle, starsEle, genresEle, directorEle;
     private final String host = "10.0.2.2";
     private final String port = "8080";
-    private final String domain = "cs122b_project1_api_example_war";
+    private final String domain = "eckoBackend_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

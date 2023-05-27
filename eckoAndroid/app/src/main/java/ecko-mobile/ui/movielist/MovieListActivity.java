@@ -37,7 +37,7 @@ public class MovieListActivity extends AppCompatActivity {
     private TextView pageCnt;
     private final String host = "10.0.2.2";
     private final String port = "8080";
-    private final String domain = "cs122b_project1_api_example_war";
+    private final String domain = "eckoBackend_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
     private final String queryUrl = "&year=&director=&starName=&genre=";
     private final String pUrl = "&n=10&sortOption=truu&arrow=prev";
