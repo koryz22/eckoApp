@@ -14,11 +14,14 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        System.out.println("USER: " + username);
+        System.out.println("PASS: " + password);
+
         /* This example only allows username/password to be test/test
         /  in the real project, you should talk to the database to verify username/password
         */
         JsonObject responseJsonObject = new JsonObject();
-        if (username.equals("anteater") && password.equals("123456")) {
+        if (username.equals("bob") && password.equals("123")) {
             // Login success:
 
             // set this user into the session

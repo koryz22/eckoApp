@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView message;
     private final String host = "10.0.2.2";
     private final String port = "8080";
-    private final String domain = "cs122b_project1_api_example_war";
+    private final String domain = "eckoBackend_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
 
     @Override
@@ -70,10 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     JsonObject js = gson.fromJson(response, JsonObject.class);
                     String status = js.get("status").getAsString();
-                    Log.d("response to string", response);
-                    Log.d("CHECKING STAT", String.valueOf(status.equals("customer_success")) );
 
-                    if (status.equals("customer_success")){
+                    if (status.equals("success")){
                         //Complete and destroy login activity once successful
                         finish();
                         // initialize the activity(page)/destination

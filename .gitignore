@@ -33,3 +33,4 @@ google-services.json
 *.hprof
 
 .DS_Store
+eckoBackend/data-parser/data-files/en.openfoodfacts.org.products.tsv
