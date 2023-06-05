@@ -1,3 +1,5 @@
+package dataStructures;
+
 import java.util.ArrayList;
 
 public class Food {
@@ -15,30 +17,29 @@ public class Food {
     proteins_100g
     sodium_100g
      */
-    public static int [] tsvParams =  {7,39,40,53,63,65,101,112,117};
+    public static int [] tsvParams =  {7,40,63,65,101,112,117};
     private final String product_name;
-    private final String traces_en;
     private final String serving_size;
-    private final String nutrition_grade_fr;
     private final String energy_100g;
     private final String fat_100g;
     private final String carbohydrates_100g;
     private final String proteins_100g;
     private final String sodium_100g;
 
+    private final String Rating = "0";
+    private final String Num_vote = "0";
+
     public Food(ArrayList<String> params) {
-        if (params.size() != 9) {
+        if (params.size() != 7) {
             throw new IllegalArgumentException("Invalid number of parameters");
         }
         this.product_name = (String) params.get(0);
-        this.traces_en = (String) params.get(1);
-        this.serving_size = (String) params.get(2);
-        this.nutrition_grade_fr = (String) params.get(3);
-        this.energy_100g = (String) params.get(4);
-        this.fat_100g = (String) params.get(5);
-        this.carbohydrates_100g = (String) params.get(6);
-        this.proteins_100g = (String) params.get(7);
-        this.sodium_100g = (String) params.get(8);
+        this.serving_size = (String) params.get(1);
+        this.energy_100g = (String) params.get(2);
+        this.fat_100g = (String) params.get(3);
+        this.carbohydrates_100g = (String) params.get(4);
+        this.proteins_100g = (String) params.get(5);
+        this.sodium_100g = (String) params.get(6);
     }
 
 
@@ -49,17 +50,11 @@ public class Food {
         return this.product_name;
     }
 
-    public String getTracesEn() {
-        return this.traces_en;
-    }
 
     public String getServingSize() {
         return this.serving_size;
     }
 
-    public String getNutritionGradeFr() {
-        return this.nutrition_grade_fr;
-    }
 
     public String getEnergy100g() {
         return this.energy_100g;
@@ -86,9 +81,7 @@ public class Food {
     @Override
     public String toString() {
         return "Product Name: " + product_name +
-                "\nTraces (EN): " + traces_en +
                 "\nServing Size: " + serving_size +
-                "\nNutrition Grade (FR): " + nutrition_grade_fr +
                 "\nEnergy (per 100g): " + energy_100g +
                 "\nFat (per 100g): " + fat_100g +
                 "\nCarbohydrates (per 100g): " + carbohydrates_100g +
