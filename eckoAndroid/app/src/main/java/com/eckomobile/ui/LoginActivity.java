@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         create.setOnClickListener(v -> {
             // Create an account
 
-
             Data.username = String.valueOf(username.getText());
             Data.password = String.valueOf(password.getText());
             startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
