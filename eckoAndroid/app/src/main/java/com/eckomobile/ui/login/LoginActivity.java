@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         // request type is POST
         final StringRequest loginRequest = new StringRequest(
-
                 // Grab post request from post method
                 Request.Method.POST,
                 baseURL + "/api/login",
@@ -70,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     JsonObject js = gson.fromJson(response, JsonObject.class);
                     String status = js.get("status").getAsString();
+                    Log.d("status", status);
 
                     if (status.equals("success")){
                         //Complete and destroy login activity once successful

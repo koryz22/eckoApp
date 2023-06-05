@@ -22,8 +22,8 @@ public class MainPageActivity extends AppCompatActivity {
         // set layout view
         setContentView(R.layout.activity_main_page);
 
-        this.button = findViewById(R.id.searchButton);
-        this.query = findViewById(R.id.search);
+//        this.button = findViewById(R.id.searchButton);
+//        this.query = findViewById(R.id.search);
 
         // assign button listener to start querying
         button.setOnClickListener(view -> handleMovieSearch());
