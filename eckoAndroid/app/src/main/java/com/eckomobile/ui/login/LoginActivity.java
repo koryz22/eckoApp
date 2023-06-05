@@ -23,10 +23,8 @@ import java.util.Map;
 
 
 public class LoginActivity extends AppCompatActivity {
-
     private EditText username;
     private EditText password;
-    private TextView message;
     private final String host = "10.0.2.2";
     private final String port = "8080";
     private final String domain = "eckoBackend_war";
@@ -42,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
         username = binding.username;
         password = binding.password;
-        message = binding.message;
         final Button loginButton = binding.login;
 
         //assign a listener to call a function to handle the user request when clicking a button
@@ -51,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void login() {
-        message.setText("Logging in...");
         // use the same network queue across our application
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         // request type is POST
@@ -80,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(MainPageActivity);
                     } else {
                         Log.d("~~~~ LOGIN ERROR: ~~~~", status);
-                        message.setText("Incorrect Username/Password");
                     }
                 },
                 error -> {
@@ -94,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("username", username.getText().toString());
                 params.put("password", password.getText().toString());
                 params.put("android", "true");
-
                 return params;
             }
         };
