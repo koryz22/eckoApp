@@ -1,4 +1,4 @@
-package com.eckomobile.ui.movielist;
+package com.eckomobile.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

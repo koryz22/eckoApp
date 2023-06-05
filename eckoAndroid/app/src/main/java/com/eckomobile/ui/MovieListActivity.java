@@ -1,4 +1,4 @@
-package com.eckomobile.ui.movielist;
+package com.eckomobile.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,7 +17,6 @@ import com.google.gson.JsonObject;
 import com.eckomobile.R;
 import com.eckomobile.data.NetworkManager;
 import com.eckomobile.data.model.Movie;
-import com.eckomobile.ui.singlemovie.SingleMovieActivity;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.eckomobile.ui.singlemovie;
+package com.eckomobile.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

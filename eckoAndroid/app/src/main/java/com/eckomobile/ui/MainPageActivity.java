@@ -1,4 +1,4 @@
-package com.eckomobile.ui.mainPage;
+package com.eckomobile.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import com.eckomobile.R;
-import com.eckomobile.ui.movielist.MovieListActivity;
 
 
 public class MainPageActivity extends AppCompatActivity {
