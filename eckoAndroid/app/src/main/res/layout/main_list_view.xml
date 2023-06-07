@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+    <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"/>
+
+    <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6/3/2023"
+            android:layout_toEndOf="@id/dateTextView"
+            android:layout_marginStart="10sp"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:layout_alignTop="@id/dateTextView"/>
+
+    <TextView
+            android:id="@+id/LFSTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dateTextView"
+            android:text="Lifestyle Score:"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginStart="10sp"/>
+
+    <TextView
+            android:id="@+id/lifestyleScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="82"
+            android:layout_toEndOf="@id/LFSTextView"
+            android:layout_marginStart="10sp"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:layout_alignTop="@id/LFSTextView"/>
+
+    <ImageView
+            android:id="@+id/lifestyleScoreImage"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_alignTop="@id/LFSTextView"
+            android:layout_toEndOf="@id/lifestyleScore"
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="3sp"
+            android:src="@drawable/lifestyle_default"/>
+
+    <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_below="@id/LFSTextView"
+            android:background="@color/white"
+            android:layout_marginTop="5sp"/>
+
+    <TextView
+            android:id="@+id/foodScoreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line"
+            android:layout_marginTop="5sp"
+            android:text="Food Score:"
+            android:textColor="@color/white"
+            android:layout_marginStart="10sp"
+            android:textSize="20sp"/>
+
+    <TextView
+            android:id="@+id/foodScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/foodScoreTitle"
+            android:text="80"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_toEndOf="@id/foodScoreTitle"
+            android:layout_marginStart="10sp"/>
+
+    <ImageView
+            android:id="@+id/foodScoreImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/food_default"
+            android:layout_alignTop="@id/foodScoreTitle"
+            android:layout_toEndOf="@id/foodScore"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="2sp"/>
+
+    <TextView
+            android:id="@+id/exerciseScoreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/foodScoreTitle"
+            android:text="Exercise Score:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginStart="10sp"/>
+
+    <TextView
+            android:id="@+id/exerciseScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="82"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_alignTop="@id/exerciseScoreTitle"
+            android:layout_toEndOf="@id/exerciseScoreTitle"
+            android:layout_marginStart="10sp"/>
+
+    <ImageView
+            android:id="@+id/exerciseScoreImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/exerciseScoreTitle"
+            android:layout_toEndOf="@id/exerciseScore"
+            android:layout_marginStart="10sp"
+            android:src="@drawable/exercise_default"
+            android:layout_marginTop="2sp"/>
+
+    <TextView
+            android:id="@+id/sleepScoreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep Score:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_below="@id/exerciseScoreTitle"
+            android:layout_marginStart="10sp"
+            android:layout_marginBottom="10sp"/>
+
+    <TextView
+            android:id="@+id/sleepScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="84"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_alignTop="@id/sleepScoreTitle"
+            android:layout_toEndOf="@id/sleepScoreTitle"
+            android:layout_marginStart="10sp"/>
+
+    <ImageView
+            android:id="@+id/sleepScoreImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/sleepScoreTitle"
+            android:layout_toEndOf="@id/sleepScore"
+            android:layout_marginStart="10sp"
+            android:src="@drawable/sleep_default"
+            android:layout_marginTop="2sp"/>
+</RelativeLayout>

@@ -1,37 +1,33 @@
-import java.io.*;
-import java.io.FileReader;
-import java.util.ArrayList;
-
-import com.univocity.parsers.tsv.TsvParserSettings;
-
-import java.sql.DriverManager;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Map;
-import java.util.HashMap;
-
-
+import com.univocity.parsers.csv.CsvParserSettings;
+import dataStructures.Exercise;
 import dataStructures.Food;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
-public class TsvParser {
 
-    private final TsvParserSettings settings;
-    private final com.univocity.parsers.tsv.TsvParser parser;
+public class CsvParser {
+
+    private final CsvParserSettings settings;
+    private final com.univocity.parsers.csv.CsvParser parser;
     public BufferedReader reader;
-    public TsvParser(){
-        this.settings = new TsvParserSettings();
+    public CsvParser(){
+        this.settings = new CsvParserSettings();
         settings.setMaxCharsPerColumn(200000);
-        this.parser = new com.univocity.parsers.tsv.TsvParser(settings);
+        this.parser = new com.univocity.parsers.csv.CsvParser(settings);
     }
 
     //setting up reader
-    public void parseTsvFile(String tsvFilePath) throws FileNotFoundException {
-        //reeading tsv file
+    public void parseCsvFile(String csvFilePath) throws FileNotFoundException {
+        //reeading csv file
         try {
-            this.reader = new BufferedReader(new FileReader(tsvFilePath));
+            this.reader = new BufferedReader(new FileReader(csvFilePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +51,7 @@ public class TsvParser {
             int cnt = 0;
             while ((line = reader.readLine()) != null ) {
 
-                //parsing line with tsv
+                //parsing line with csv
                 String[] row = parser.parseLine(line);
                 //Row processing
                 ArrayList <String> params = new ArrayList<>();
@@ -72,16 +68,14 @@ public class TsvParser {
                     params.add(val);
                 }
 
-                if ( (row[ParamColumns[3]]== null||  row[ParamColumns[3]].isEmpty())|| nullcnt > ParamColumns.length/2){
-                    continue;
-                }
+
 
                 //IF parsing food
-                if(flag.equals("food")){
-                    Food food = new Food(params);
+                if(flag.equals("exercise")){
+                    Exercise exercise = new Exercise(params);
 //                    System.out.print(cnt + " ");
-//                    System.out.println(food.toString());
-                    object.add((Auto) food);
+//                    System.out.println(exercise.toString());
+                    object.add((Auto) exercise);
 
                 }
 
@@ -98,24 +92,23 @@ public class TsvParser {
     public static void main(String[] args) {
 
         //data files used to populate db
-        String tsvFoodFile = "data-files/en.openfoodfacts.org.products.tsv";
+
+        String csvExerciseFile = "data-files/exercise_dataset.csv";
 
 
+        CsvParser csvParser = new CsvParser();
 
-        TsvParser tsvParser = new TsvParser();
         try {
-            //created a reader for the tsv file
-            tsvParser.parseTsvFile(tsvFoodFile);
-            //Arraylist of food
-            ArrayList<Food> foodAryList = new ArrayList<>();
-            //parsing the food reader
-            tsvParser.parseReader(Food.tsvParams, foodAryList, "food" );
-            //food list
-            System.out.println(foodAryList.size());
+            //created a reader for the csv file exercise
+            csvParser.parseCsvFile(csvExerciseFile);
+            //Arraylist of Exercises
+            ArrayList<Exercise> exerciseArrayList = new ArrayList<>();
+            //parsing the Exercise reader
+            csvParser.parseReader(Exercise.csvParams, exerciseArrayList, "exercise" );
+            //exercise list
+            System.out.println(exerciseArrayList.size());
 
 
-            // prebuild sql statement add it all together
-            // use BatchInsert Technique
             System.out.println("Adding data to SQL...(ADDING TO TEST TABLE)");
 
             Connection connection = null;
@@ -130,32 +123,21 @@ public class TsvParser {
             PreparedStatement stmt = null;
             String sqlInsertRecord = null;
             int[] iNoRows = null;
-            sqlInsertRecord = "INSERT INTO Food (FoodName, ServingSize, Calories, Carbs, Protein, Fat, Sodium, Rating, NumVote) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";;
+            sqlInsertRecord = "INSERT INTO Exercise (ExerciseName, CaloriesBurned, Rating, NumVotes) VALUES (?, ?, ?, ?)";
             try {
                 connection.setAutoCommit(false);
                 stmt = connection.prepareStatement(sqlInsertRecord);
 
-                for ( Food fooditem : foodAryList) {
+                for ( Exercise exerciseItems : exerciseArrayList) {
 
-                    System.out.print("ADDING : "+ fooditem.toString());
-                    stmt.setString(1, fooditem.getProductName() );
+                    System.out.print("ADDING : "+ exerciseItems.toString());
+                    stmt.setString(1, exerciseItems.getExerciseName());
                     System.out.println("*");
-                    stmt.setString(2, fooditem.getServingSize());
+                    stmt.setFloat(2, Float.parseFloat(exerciseItems.getCalBurnedPerKg()));
                     System.out.println("*");
-                    stmt.setFloat(3, Float.parseFloat(fooditem.getEnergy100g()));
+                    stmt.setFloat(3, 0);
                     System.out.println("*");
-                    stmt.setFloat(4, Float.parseFloat(fooditem.getCarbohydrates100g()));
-                    System.out.println("*");
-                    stmt.setFloat(5, Float.parseFloat(fooditem.getProteins100g()));
-                    System.out.println("*");
-                    stmt.setFloat(6, Float.parseFloat(fooditem.getFat100g()));
-                    System.out.println("*");
-                    stmt.setFloat(7, Float.parseFloat(fooditem.getSodium100g()));
-                    System.out.println("*");
-                    stmt.setString(8, "0");
-                    System.out.println("*");
-                    stmt.setInt(9, 0);
+                    stmt.setInt(4, 0);
                     System.out.println("*");
                     stmt.addBatch();
 
@@ -172,6 +154,8 @@ public class TsvParser {
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
 
 
     }

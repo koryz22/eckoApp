@@ -1,47 +1,60 @@
 import com.google.gson.JsonObject;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
+    private static DataSource dataSource;
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/healthAppdb");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
         System.out.println("USER: " + username);
         System.out.println("PASS: " + password);
 
-        /* This example only allows username/password to be test/test
-        /  in the real project, you should talk to the database to verify username/password
-        */
         JsonObject responseJsonObject = new JsonObject();
-        if (username.equals("bob") && password.equals("123")) {
-            // Login success:
 
-            // set this user into the session
-            request.getSession().setAttribute("user", new User(username));
+        try (Connection conn = dataSource.getConnection()) {
+            String query = "SELECT * from Users where Email = ? and UserPass = ?";
+            PreparedStatement pStatement = conn.prepareStatement(query);
+            pStatement.setString(1, username);
+            pStatement.setString(2, password);
+            ResultSet employee_rs = pStatement.executeQuery();
 
-            responseJsonObject.addProperty("status", "success");
-            responseJsonObject.addProperty("message", "success");
-
-        } else {
-            // Login fail
-            responseJsonObject.addProperty("status", "fail");
-            // Log to localhost log
-            request.getServletContext().log("Login failed");
-            // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
-            if (!username.equals("anteater")) {
-                responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
+            if (employee_rs.next()) {
+                int user_id = employee_rs.getInt("UserId");
+                responseJsonObject.addProperty("message", "success");
+                responseJsonObject.addProperty("UserId", user_id);
+                System.out.println("USER_ID: " + user_id);
             } else {
-                responseJsonObject.addProperty("message", "incorrect password");
+                responseJsonObject.addProperty("message", "fail");
             }
+            response.getWriter().write(responseJsonObject.toString());
+            response.setStatus(200);
+        } catch (Exception e) {
+            responseJsonObject.addProperty("error", e.getMessage());
+            response.getWriter().write(responseJsonObject.toString());
+            response.setStatus(500);
         }
-        response.getWriter().write(responseJsonObject.toString());
     }
 }

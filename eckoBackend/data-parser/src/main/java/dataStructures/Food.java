@@ -8,7 +8,6 @@ public class Food {
     THE NUMBERS REPRESENT THE INDEX NUMBERS FOR FIELDS
     DATA FIlE we using "data-files/en.openfoodfacts.org.products.tsv"
     product_name
-    traces_en
     serving_size
     nutrition_grade_fr
     energy_100g
@@ -47,33 +46,39 @@ public class Food {
         return tsvParams;
     }
     public String getProductName() {
-        return this.product_name;
+        return this.product_name != null ? this.product_name : "-1";
     }
-
 
     public String getServingSize() {
-        return this.serving_size;
+        return this.serving_size != null ? this.serving_size : "-1";
     }
 
-
     public String getEnergy100g() {
-        return this.energy_100g;
+        return this.energy_100g != null ? this.energy_100g : "-1";
     }
 
     public String getFat100g() {
-        return this.fat_100g;
+        return this.fat_100g != null ? this.fat_100g : "-1";
     }
 
     public String getCarbohydrates100g() {
-        return this.carbohydrates_100g;
+        return this.carbohydrates_100g != null ? this.carbohydrates_100g : "-1";
     }
 
     public String getProteins100g() {
-        return this.proteins_100g;
+        return this.proteins_100g != null ? this.proteins_100g : "-1";
     }
 
     public String getSodium100g() {
-        return this.sodium_100g;
+        return this.sodium_100g != null ? this.sodium_100g : "-1";
+    }
+
+    public String getRating() {
+        return Rating;
+    }
+
+    public String getNumVotes() {
+        return Num_vote;
     }
 
 
@@ -86,7 +91,9 @@ public class Food {
                 "\nFat (per 100g): " + fat_100g +
                 "\nCarbohydrates (per 100g): " + carbohydrates_100g +
                 "\nProteins (per 100g): " + proteins_100g +
-                "\nSodium (per 100g): " + sodium_100g;
+                "\nSodium (per 100g): " + sodium_100g +
+                "\nRating: " + Rating +
+                "\nNumber of Votes: " + Num_vote;
     }
 
 
