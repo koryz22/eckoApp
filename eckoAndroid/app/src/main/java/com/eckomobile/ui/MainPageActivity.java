@@ -65,7 +65,7 @@ public class MainPageActivity extends AppCompatActivity {
             return false;
         });
 
-        profileButton.setOnClickListener(v -> startActivity(new Intent(MainPageActivity.this, MainPageActivity.class)));
+        profileButton.setOnClickListener(v -> startActivity(new Intent(MainPageActivity.this, ProfileActivity.class)));
         HomeItemAdapter homeItemAdapter = new HomeItemAdapter(this, Data.homeItems);
         listViewHome.setAdapter(homeItemAdapter);
     }
