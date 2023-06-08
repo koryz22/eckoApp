@@ -51,9 +51,9 @@ public class MainPageActivity extends AppCompatActivity {
             {
                 case R.id.home:
                     return true;
-//                case R.id.food:
-//                    startActivity(new Intent(MainPageActivity.this, FoodActivity.class));
-//                    return true;
+                case R.id.food:
+                    startActivity(new Intent(MainPageActivity.this, FoodActivity.class));
+                    return true;
 //                case R.id.sleep:
 //                    startActivity(new Intent(MainPageActivity.this, SleepActivity.class));
 //                    return true;

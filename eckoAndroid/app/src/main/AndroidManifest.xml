@@ -13,6 +13,7 @@
             android:usesCleartextTraffic="true">
         <activity android:name=".ui.MainPageActivity"/>
         <activity android:name=".ui.ProfileActivity"/>
+        <activity android:name=".ui.FoodActivity"/>
         <activity android:name=".ui.movielist.MovieListActivity"/>
         <activity android:name=".ui.singlemovie.SingleMovieActivity"/>
         <activity
