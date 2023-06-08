@@ -14,6 +14,7 @@ import com.eckomobile.R;
 import com.eckomobile.data.NetworkManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
@@ -21,7 +22,6 @@ import java.util.Map;
 
 
 public class MainPageActivity extends AppCompatActivity {
-
     private final String host = "10.0.2.2";
     private final String port = "8080";
     private final String domain = "eckoBackend_war";
@@ -39,8 +39,8 @@ public class MainPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.userId = getIntent().getIntExtra("UserId",0);
-
         setContentView(R.layout.activity_main_page);
+        display_records();
 
         bottomNavigationViewHome = findViewById(R.id.bottomNavigationViewHome);
         listViewHome = findViewById(R.id.listViewHome);
@@ -70,57 +70,39 @@ public class MainPageActivity extends AppCompatActivity {
         listViewHome.setAdapter(homeItemAdapter);
     }
     @SuppressLint("SetTextI18n")
-    public void dispaly_records() {
+    public void display_records() {
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         final StringRequest recordsRequest = new StringRequest(
                 Request.Method.GET,
-                baseURL + "/api/main-page",
+                baseURL + "/api/mainPage?UserId=100000008",
                 response -> {
                     Log.d("~~~~ Main Page record: ~~~~", response);
                     Log.d("USER ID: ", Integer.toString(this.userId) );
 
                     Gson gson = new Gson();
-                    JsonObject js = gson.fromJson(response, JsonObject.class);
+                    JsonArray js = gson.fromJson(response, JsonArray.class);
                     Log.d("JS", js.toString());
+
+                    for (int i = 0; i < js.size(); i++) {
+                        JsonObject obj = js.get(i).getAsJsonObject();
+
+//                        JsonElement property1 = object.get("property1");
+//                        JsonElement property2 = object.get("property2");
+//                      add to data like this based on json obj
+//                    Data.homeItems.add(new HomeItem("6/3/2023", 80, R.drawable.lifestyle1, 82, R.drawable.food2, 78, R.drawable.exercise2, 80, R.drawable.sleep1));
+//
+                    }
+                    // loop through array
 
                 },
                 error -> {
-                    // error
                     Log.d("~~~~ LOGIN ERROR: ~~~~", error.toString());
                 });
 
         queue.add(recordsRequest);
     }
 
-    //        final StringRequest mainPageRequest = new StringRequest(
-//                Request.Method.GET,
-//                baseURL + "/api/main-page",
-//                response -> {
-//                    Gson gson = new Gson();
-//                    JsonObject js = gson.fromJson(response, JsonObject.class);
-//                    String status = js.get("message").getAsString();
-//
-////                    if (status.equals("success")){
-////                        finish();
-////                        Intent MainPageActivity = new Intent(LoginActivity.this, MainPageActivity.class);
-////                        startActivity(MainPageActivity);
-////                    } else {
-////                        Log.d("~~~~ LOGIN ERROR: ~~~~", status);
-////                    }
-//                },
-//                error -> {
-//                    Log.d("~~~~ MAIN PAGE ERROR: ~~~~", error.toString());
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                final Map<String, String> params = new HashMap<>();
-//                params.put("userId", );
-//                return params;
-//            }
-//        };
-//
-//
-//        queue.add(mainPageRequest);
+
 
 
 

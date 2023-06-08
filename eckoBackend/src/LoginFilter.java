@@ -17,6 +17,7 @@ public class LoginFilter implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -32,7 +33,9 @@ public class LoginFilter implements Filter {
         // Redirect to login page if the "user" attribute doesn't exist in session
         if (httpRequest.getSession().getAttribute("user") == null) {
             httpResponse.sendRedirect("login.html");
+            System.out.println("SESSION USER: "+ httpRequest.getServletContext().getAttribute("user"));
         } else {
+            System.out.println("SESSION USER:"+ httpRequest.getServletContext().getAttribute("user"));
             chain.doFilter(request, response);
         }
     }

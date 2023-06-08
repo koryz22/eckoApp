@@ -61,11 +61,12 @@ public class LoginActivity extends AppCompatActivity {
                     JsonObject js = gson.fromJson(response, JsonObject.class);
                     String status = js.get("message").getAsString();
                     this.userId = js.get("UserId").getAsInt();
-                    Log.d("ID", Integer.toString(this.userId));
+                    Log.d("USER ID", String.valueOf(this.userId));
 
                     if (status.equals("success")){
                         finish();
                         Intent MainPageActivity = new Intent(LoginActivity.this, MainPageActivity.class);
+
                         MainPageActivity.putExtra("UserId", this.userId);
                         startActivity(MainPageActivity);
                     } else {

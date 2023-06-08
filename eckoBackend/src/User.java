@@ -1,6 +1,8 @@
 public class User {
     private final String username;
-    public User(String username) {
+    private final int userid;
+    public User(String username, int userid) {
+        this.userid = userid;
         this.username = username;
     }
 }

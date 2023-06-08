@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     private static DataSource dataSource;
+//    init grabbing datasource
     public void init(ServletConfig config) {
         try {
             dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/healthAppdb");
@@ -26,7 +27,9 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
+//    post method of login
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        grabbing username and password
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         System.out.println("USER: " + username);
@@ -40,15 +43,19 @@ public class LoginServlet extends HttpServlet {
             pStatement.setString(1, username);
             pStatement.setString(2, password);
             ResultSet employee_rs = pStatement.executeQuery();
-
+            //if userpassword is correct
             if (employee_rs.next()) {
                 int user_id = employee_rs.getInt("UserId");
+                System.out.println(user_id);
+                //grab stAttribute session
+                request.getSession().setAttribute("user", new User(username, user_id));
                 responseJsonObject.addProperty("message", "success");
                 responseJsonObject.addProperty("UserId", user_id);
-                System.out.println("USER_ID: " + user_id);
+
             } else {
                 responseJsonObject.addProperty("message", "fail");
             }
+
             response.getWriter().write(responseJsonObject.toString());
             response.setStatus(200);
         } catch (Exception e) {
