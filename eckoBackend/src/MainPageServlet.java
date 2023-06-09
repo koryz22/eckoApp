@@ -65,11 +65,9 @@ public class MainPageServlet extends HttpServlet {
                 jsonObject.addProperty("sleep_score", sleep_score);
                 jsonArray.add(jsonObject);
             }
-            System.out.println("Inside Main Page GET 3");
             record_rs.close();
             pStatement.close();
             response.getWriter().write(jsonArray.toString());
-            System.out.println("Inside Main Page GET 4");
         } catch (Exception e) {
             System.out.println("Inside Main Page GET 5");
             JsonObject jsonObject = new JsonObject();

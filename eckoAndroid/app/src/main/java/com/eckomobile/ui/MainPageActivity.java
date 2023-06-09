@@ -54,18 +54,20 @@ public class MainPageActivity extends AppCompatActivity {
                 case R.id.food:
                     startActivity(new Intent(MainPageActivity.this, FoodActivity.class));
                     return true;
+                case R.id.exercise:
+                    startActivity(new Intent(MainPageActivity.this, ExerciseActivity.class));
+                    return true;
 //                case R.id.sleep:
 //                    startActivity(new Intent(MainPageActivity.this, SleepActivity.class));
 //                    return true;
-//                case R.id.exercise:
-//                    startActivity(new Intent(MainPageActivity.this, ExerciseActivity.class));
-//                    return true;
+
             }
 
             return false;
         });
 
         profileButton.setOnClickListener(v -> startActivity(new Intent(MainPageActivity.this, ProfileActivity.class)));
+
         HomeItemAdapter homeItemAdapter = new HomeItemAdapter(this, Data.homeItems);
         listViewHome.setAdapter(homeItemAdapter);
     }
@@ -74,7 +76,7 @@ public class MainPageActivity extends AppCompatActivity {
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         final StringRequest recordsRequest = new StringRequest(
                 Request.Method.GET,
-                baseURL + "/api/mainPage?UserId=100000008",
+                baseURL + "/api/mainPage?UserId="+ this.userId,
                 response -> {
                     Log.d("~~~~ Main Page record: ~~~~", response);
                     Log.d("USER ID: ", Integer.toString(this.userId) );
@@ -83,16 +85,20 @@ public class MainPageActivity extends AppCompatActivity {
                     JsonArray js = gson.fromJson(response, JsonArray.class);
                     Log.d("JS", js.toString());
 
+//                    looping through previouse dates
                     for (int i = 0; i < js.size(); i++) {
+//                        adding previouse dates into homeitem
                         JsonObject obj = js.get(i).getAsJsonObject();
 
-//                        JsonElement property1 = object.get("property1");
-//                        JsonElement property2 = object.get("property2");
-//                      add to data like this based on json obj
-//                    Data.homeItems.add(new HomeItem("6/3/2023", 80, R.drawable.lifestyle1, 82, R.drawable.food2, 78, R.drawable.exercise2, 80, R.drawable.sleep1));
+                        String date = obj.get("date").toString();
+                        date = date.substring(1,date.length()-1);
+                        int ls_score = obj.get("ls_score").getAsInt();
+                        int food_score = obj.get("food_score").getAsInt();
+                        int exercise_score = obj.get("exercise_score").getAsInt();
+                        int sleep_score = obj.get("sleep_score").getAsInt();
+                        Data.homeItems.add(new HomeItem(date, ls_score, R.drawable.lifestyle1, food_score, R.drawable.food2, exercise_score, R.drawable.exercise2, sleep_score, R.drawable.sleep1));
 //
                     }
-                    // loop through array
 
                 },
                 error -> {

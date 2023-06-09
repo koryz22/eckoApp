@@ -7,11 +7,20 @@ function handleSessionData(resultDataString) {
     let resultDataJson = JSON.parse(resultDataString);
 
     console.log("mainPagejs");
+    console.log("resultDataString: " + resultDataString);
+    //parsing results
+    let html = "";
 
-
-    // show the session information 
-    $("#sessionID").text("Session ID: " + resultDataJson["sessionID"]);
-    $("#lastAccessTime").text("Last access time: " + resultDataJson["lastAccessTime"]);
+    for(let i = 0; i < resultDataJson.length;i++){
+        html +=" <ol>" + resultDataJson[i]["date"] +"</ol>";
+        html +=" <ol>" + resultDataJson[i]["ls_score"] +"</ol>";
+        html +=" <ol>" + resultDataJson[i]["food_score"] +"</ol>";
+        html +=" <ol>" + resultDataJson[i]["exercise_score"] +"</ol>";
+        html +=" <ol>" + resultDataJson[i]["sleep_score"] +"</ol>";
+        html += "<br>";
+    }
+    // show passed values
+    $("#passedInfo").append(html);
 
 }
 

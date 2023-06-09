@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+    <TextView
+            android:id="@+id/exerciseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:text="Exercise Name"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"/>
+
+    <TextView
+            android:id="@+id/exerciseCaloriesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories:"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_alignStart="@id/exerciseName"
+            android:layout_below="@id/exerciseName"
+            android:layout_marginStart="10sp"/>
+
+    <TextView
+            android:id="@+id/exerciseCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/exerciseCaloriesTitle"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_toEndOf="@id/exerciseCaloriesTitle"
+            android:text="N/A"
+            android:layout_marginStart="10sp"/>
+
+    <TextView
+            android:id="@+id/exerciseTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time:"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_alignStart="@id/exerciseCaloriesTitle"
+            android:layout_below="@id/exerciseCaloriesTitle"
+            android:layout_marginBottom="10sp"/>
+
+    <TextView
+            android:id="@+id/exerciseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:layout_alignStart="@id/exerciseCalories"
+            android:layout_alignTop="@id/exerciseTimeTitle"/>
+
+    <ImageView
+            android:id="@+id/exerciseRatingOne"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@drawable/one"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/exerciseRatingTwo"/>
+
+    <ImageView
+            android:id="@+id/exerciseRatingTwo"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@drawable/two"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/exerciseRatingThree"/>
+
+    <ImageView
+            android:id="@+id/exerciseRatingThree"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@drawable/three"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10sp"/>
+</RelativeLayout>
