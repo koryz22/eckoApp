@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -14,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "MainPageServlet", urlPatterns = "/api/mainPage")
 public class MainPageServlet extends HttpServlet {
@@ -51,7 +54,7 @@ public class MainPageServlet extends HttpServlet {
                 int exercise_score = record_rs.getInt("ExerciseScore");
                 int sleep_score = record_rs.getInt("SleepScore");
                 // GRABBING DATA
-                System.out.println("USER : " + String.valueOf(user_id));
+                System.out.println("USER : " + user_id);
                 System.out.println(date);
                 System.out.println(ls_score);
                 System.out.println(food_score);
@@ -69,6 +72,59 @@ public class MainPageServlet extends HttpServlet {
             pStatement.close();
             response.getWriter().write(jsonArray.toString());
         } catch (Exception e) {
+            System.out.println("Inside Main Page GET 5");
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("error", e.getMessage());
+            response.getWriter().write(jsonObject.toString());
+            response.setStatus(500);
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("Inside Main Page Post");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int user_id = user.getUserid();
+
+        Boolean create = false;
+        System.out.println(user_id);
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formattedDate = currentDate.format(formatter);
+        System.out.println("Current date: " + formattedDate);
+
+        try (Connection conn = dataSource.getConnection()) {
+//            seeing if today is already in db
+            String query = "SELECT * from UserRecord WHERE UserId = ? and Date = ?";
+            PreparedStatement pStatement = conn.prepareStatement(query);
+            pStatement.setInt(1, user_id);
+            pStatement.setString(2, formattedDate);
+            ResultSet record_rs = pStatement.executeQuery();
+            System.out.println("Inside Main Page Post 2");
+            if (record_rs.next()) {
+                System.out.println("create = false");
+            } else {
+                System.out.println("create = true");
+                create = true;
+            }
+            record_rs.close();
+            pStatement.close();
+
+            if (create) {
+                //            seeing if today is already in db
+                String query2 = "INSERT INTO UserRecord (Date, UserId, LifestyleScore, FoodScore, ExerciseScore, SleepScore) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement pStatement2 = conn.prepareStatement(query2);
+                pStatement2.setString(1, formattedDate);
+                pStatement2.setInt(2, user_id);
+                pStatement2.setInt(3, 0);
+                pStatement2.setInt(4, 0);
+                pStatement2.setInt(5, 0);
+                pStatement2.setInt(6, 0);
+                int rowsAffected = pStatement2.executeUpdate();
+                System.out.println(rowsAffected + " rows affected.");
+                pStatement2.close();
+            }
+        } catch(Exception e){
             System.out.println("Inside Main Page GET 5");
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("error", e.getMessage());

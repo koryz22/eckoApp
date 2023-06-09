@@ -108,7 +108,7 @@
             android:layout_below="@id/searchQuestion"
             android:layout_alignStart="@id/searchFoodsTitle"
             android:backgroundTint="@color/white"
-            android:hint="Cheese Pizza"
+            android:hint="Chicken Sandwich"
             android:textSize="15sp"
             android:textColorHint="@color/dark_grey"/>
 

@@ -40,6 +40,10 @@ public class MainPageActivity extends AppCompatActivity {
 
         this.userId = getIntent().getIntExtra("UserId",0);
         setContentView(R.layout.activity_main_page);
+//        check if today's record is created
+        check_record();
+
+//        display updated record
         display_records();
 
         bottomNavigationViewHome = findViewById(R.id.bottomNavigationViewHome);
@@ -64,9 +68,7 @@ public class MainPageActivity extends AppCompatActivity {
 
             return false;
         });
-
         profileButton.setOnClickListener(v -> startActivity(new Intent(MainPageActivity.this, ProfileActivity.class)));
-
         HomeItemAdapter homeItemAdapter = new HomeItemAdapter(this, Data.homeItems);
         listViewHome.setAdapter(homeItemAdapter);
     }
@@ -84,19 +86,15 @@ public class MainPageActivity extends AppCompatActivity {
                     JsonArray js = gson.fromJson(response, JsonArray.class);
                     Log.d("JS", js.toString());
 
-//                    looping through previouse dates
                     for (int i = 0; i < js.size(); i++) {
-//                        adding previouse dates into homeitem
                         JsonObject obj = js.get(i).getAsJsonObject();
-
                         String date = obj.get("date").toString();
-                        date = date.substring(1,date.length()-1);
+                        date = date.substring(1, date.length() - 1);
                         int ls_score = obj.get("ls_score").getAsInt();
                         int food_score = obj.get("food_score").getAsInt();
                         int exercise_score = obj.get("exercise_score").getAsInt();
                         int sleep_score = obj.get("sleep_score").getAsInt();
-                        Data.homeItems.add(new HomeItem(date, ls_score, R.drawable.lifestyle1, food_score, R.drawable.food2, exercise_score, R.drawable.exercise2, sleep_score, R.drawable.sleep1));
-//
+                        Data.homeItems.add(new HomeItem(date, ls_score, R.drawable.lifestyle4, food_score, R.drawable.food7, exercise_score, R.drawable.exercise5, sleep_score, R.drawable.sleep3));
                     }
 
                 },
@@ -107,8 +105,18 @@ public class MainPageActivity extends AppCompatActivity {
         queue.add(recordsRequest);
     }
 
-
-
-
-
+    public void check_record() {
+        final RequestQueue queue = NetworkManager.sharedManager(this).queue;
+        final StringRequest addTodaysDateRequest = new StringRequest(
+                Request.Method.POST,
+                baseURL + "/api/mainPage",
+                response -> {
+                    Log.d("~~~~ Main Page post: ~~~~", response);
+                    Log.d("USER ID: ", Integer.toString(this.userId) );
+                },
+                error -> {
+                    Log.d("~~~~ LOGIN ERROR: ~~~~", error.toString());
+                });
+        queue.add(addTodaysDateRequest);
+    }
 }

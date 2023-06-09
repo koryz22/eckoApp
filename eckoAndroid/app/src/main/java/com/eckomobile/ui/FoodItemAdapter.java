@@ -1,5 +1,6 @@
 package com.eckomobile.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
         super(context, 0, arrayList);
     }
 
+    @SuppressLint("SetTextI18n")
     public View getView(int position, View convertView, ViewGroup parent) {
         View currentItemView = convertView;
 
@@ -30,16 +32,16 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
         foodName.setText(currentPosition.getName());
 
         TextView foodCalories = currentItemView.findViewById(R.id.foodCalories);
-        foodCalories.setText(String.valueOf(currentPosition.getCalories()));
+        foodCalories.setText(currentPosition.getCalories() + "g");
 
         TextView foodCarbs = currentItemView.findViewById(R.id.foodCarbs);
-        foodCarbs.setText(String.valueOf(currentPosition.getCarbs()));
+        foodCarbs.setText(currentPosition.getCarbs() + "g");
 
         TextView foodProtein = currentItemView.findViewById(R.id.foodProtein);
-        foodProtein.setText(String.valueOf(currentPosition.getProtein()));
+        foodProtein.setText(currentPosition.getProtein() + "g");
 
         TextView foodFat = currentItemView.findViewById(R.id.foodFat);
-        foodFat.setText(String.valueOf(currentPosition.getFat()));
+        foodFat.setText(currentPosition.getFat() + "g");
 
         TextView foodServingSize = currentItemView.findViewById(R.id.foodServingSize);
         foodServingSize.setText(String.valueOf(currentPosition.getServingSize()));
@@ -47,21 +49,18 @@ public class FoodItemAdapter extends ArrayAdapter<FoodItem> {
         ImageView foodRatingOne = currentItemView.findViewById(R.id.foodRatingOne);
         foodRatingOne.setOnClickListener(v -> {
             // Log the selection
-
             Toast.makeText(getContext(), "Selected 1", Toast.LENGTH_SHORT).show();
         });
 
         ImageView foodRatingTwo = currentItemView.findViewById(R.id.foodRatingTwo);
         foodRatingTwo.setOnClickListener(v -> {
             // Log the selection
-
             Toast.makeText(getContext(), "Selected 2", Toast.LENGTH_SHORT).show();
         });
 
         ImageView foodRatingThree = currentItemView.findViewById(R.id.foodRatingThree);
         foodRatingThree.setOnClickListener(v -> {
             // Log the selection
-
             Toast.makeText(getContext(), "Selected 3", Toast.LENGTH_SHORT).show();
         });
 

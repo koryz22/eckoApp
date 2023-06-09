@@ -4,6 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -42,20 +43,32 @@ public class LoginServlet extends HttpServlet {
             PreparedStatement pStatement = conn.prepareStatement(query);
             pStatement.setString(1, username);
             pStatement.setString(2, password);
-            ResultSet employee_rs = pStatement.executeQuery();
+            ResultSet rs = pStatement.executeQuery();
             //if userpassword is correct
-            if (employee_rs.next()) {
-                int user_id = employee_rs.getInt("UserId");
+            if (rs.next()) {
+                int user_id = rs.getInt("UserId");
+                String primaryGoal = rs.getString("PrimaryGoal");
+                String foodGoal = rs.getString("FoodGoal");
+                String exerciseGoal = rs.getString("ExerciseGoal");
+                String sleepGoal = rs.getString("SleepGoal");
+
+
                 System.out.println(user_id);
                 //grab stAttribute session
-                request.getSession().setAttribute("user", new User(username, user_id));
+                HttpSession session = request.getSession();
+                session.setAttribute("user", new User(username, user_id));
+                session.setAttribute("primaryGoal", primaryGoal);
+                session.setAttribute("foodGoal", foodGoal);
+                session.setAttribute("exerciseGoal", exerciseGoal);
+                session.setAttribute("sleepGoal", sleepGoal);
+
                 responseJsonObject.addProperty("message", "success");
                 responseJsonObject.addProperty("UserId", user_id);
-
             } else {
                 responseJsonObject.addProperty("message", "fail");
             }
 
+            pStatement.close();
             response.getWriter().write(responseJsonObject.toString());
             response.setStatus(200);
         } catch (Exception e) {

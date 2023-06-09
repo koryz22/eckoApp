@@ -7,7 +7,7 @@ public class Exercise {
     THE NUMBERS REPRESENT THE INDEX NUMBERS FOR FIELDS
     DATA FIlE we are using "data-files/exercise_dataset.csv"
     Exercise_name = 0
-    cal per kg 5
+    cal per kg = 5
      */
 
     public static int [] csvParams =  {0,5};

@@ -127,6 +127,11 @@ public class ProfileServlet extends HttpServlet {
             pStatement.setString(4, sleepGoal);
             pStatement.setInt(5, user_id);
 
+            session.setAttribute("primaryGoal", primaryGoal);
+            session.setAttribute("foodGoal", foodGoal);
+            session.setAttribute("exerciseGoal", exerciseGoal);
+            session.setAttribute("sleepGoal", sleepGoal);
+
             int rowsAffected = pStatement.executeUpdate();
             System.out.println(rowsAffected + " rows affected.");
             pStatement.close();

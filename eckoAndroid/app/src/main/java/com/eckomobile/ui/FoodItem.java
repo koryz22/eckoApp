@@ -2,9 +2,10 @@ package com.eckomobile.ui;
 
 public class FoodItem {
     private String name;
-    private int calories, carbs, protein, fat, servingSize;
+    private float calories, carbs, protein, fat;
+    private int servingSize;
 
-    public FoodItem(String foodName, int foodCalories, int foodCarbs, int foodProtein, int foodFat, int foodServingSize) {
+    public FoodItem(String foodName, float foodCalories, float foodCarbs, float foodProtein, float foodFat, int foodServingSize) {
         name = foodName;
         calories = foodCalories;
         carbs = foodCarbs;
@@ -17,19 +18,19 @@ public class FoodItem {
         return name;
     }
 
-    public int getCalories() {
+    public float getCalories() {
         return calories;
     }
 
-    public int getCarbs() {
+    public float getCarbs() {
         return carbs;
     }
 
-    public int getProtein() {
+    public float getProtein() {
         return protein;
     }
 
-    public int getFat() {
+    public float getFat() {
         return fat;
     }
 

@@ -153,6 +153,7 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             ((TextView) parent.getChildAt(0)).setTextColor(0xFFFFFFFF);
+
                             exercise_goal = Data.fitnessLevels[position];
                         }
                         @Override
