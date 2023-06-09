@@ -39,7 +39,7 @@ public class MainPageServlet extends HttpServlet {
 
         try (Connection conn = dataSource.getConnection()) {
             JsonArray jsonArray = new JsonArray();
-            String query = "SELECT * from UserRecord WHERE UserId = ?";
+            String query = "SELECT * from UserRecord WHERE UserId = ? ORDER BY Date DESC";
             PreparedStatement pStatement = conn.prepareStatement(query);
             pStatement.setInt(1, user_id);
             ResultSet record_rs = pStatement.executeQuery();

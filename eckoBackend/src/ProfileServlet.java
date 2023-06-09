@@ -43,13 +43,9 @@ public class ProfileServlet extends HttpServlet {
 
         //grabbing user from session
         User user = (User) session.getAttribute("user");
-
-
-
-        System.out.println("USER NAme PASSED: " + user.toString());
+        System.out.println("USER NAME PASSED: " + user.toString());
 
         int user_id = user.getUserid();
-
 
         try (Connection conn = dataSource.getConnection()) {
             JsonObject userJso = new JsonObject();
@@ -61,7 +57,6 @@ public class ProfileServlet extends HttpServlet {
             System.out.println("Inside Profile Page GET 2");
             while(record_rs.next()) {
                 System.out.println ("Inside Profile Page GET 3");
-
                 System.out.println(record_rs.toString());
 
                 // GRABBING DATA
@@ -90,7 +85,6 @@ public class ProfileServlet extends HttpServlet {
                 userJso.addProperty("exercise_goal",exercise_goal);
                 userJso.addProperty("primary_goal",primary_goal);
                 userJso.addProperty("weight",weight);
-
             }
             record_rs.close();
             pStatement.close();
@@ -109,30 +103,36 @@ public class ProfileServlet extends HttpServlet {
      * handles POST requests to add and show the item list information
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String item = request.getParameter("item");
-        System.out.println(item);
+        String primaryGoal = request.getParameter("primaryGoal");
+        String foodGoal = request.getParameter("foodGoal");
+        String exerciseGoal = request.getParameter("exerciseGoal");
+        String sleepGoal = request.getParameter("sleepGoal");
+        System.out.println("Primary Goal: " + primaryGoal);
+        System.out.println("Food Goal: " + foodGoal);
+        System.out.println("Exercise Goal: " + exerciseGoal);
+        System.out.println("Sleep Goal: " + sleepGoal);
+
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int user_id = user.getUserid();
 
-        // get the previous items in a ArrayList
-        ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
-        if (previousItems == null) {
-            previousItems = new ArrayList<String>();
-            previousItems.add(item);
-            session.setAttribute("previousItems", previousItems);
-        } else {
-            // prevent corrupted states through sharing under multi-threads
-            // will only be executed by one thread at a time
-            synchronized (previousItems) {
-                previousItems.add(item);
-            }
+        try (Connection conn = dataSource.getConnection()) {
+            String query = "UPDATE Users\n" +
+                    "SET PrimaryGoal = ?, FoodGoal = ?, ExerciseGoal = ?, SleepGoal = ?\n" +
+                    "WHERE UserId = ?;";
+            PreparedStatement pStatement = conn.prepareStatement(query);
+            pStatement.setString(1, primaryGoal);
+            pStatement.setString(2, foodGoal);
+            pStatement.setString(3, exerciseGoal);
+            pStatement.setString(4, sleepGoal);
+            pStatement.setInt(5, user_id);
+
+            int rowsAffected = pStatement.executeUpdate();
+            System.out.println(rowsAffected + " rows affected.");
+            pStatement.close();
+
+        } catch (Exception e) {
+            System.out.println("Profile Post Error: " + e);
         }
-
-        JsonObject responseJsonObject = new JsonObject();
-
-        JsonArray previousItemsJsonArray = new JsonArray();
-        previousItems.forEach(previousItemsJsonArray::add);
-        responseJsonObject.add("previousItems", previousItemsJsonArray);
-
-        response.getWriter().write(responseJsonObject.toString());
     }
 }

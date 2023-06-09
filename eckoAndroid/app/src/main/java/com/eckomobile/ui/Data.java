@@ -15,24 +15,24 @@ public class Data {
     public static String sleepHour = "";
 
     public static final String[] primaryGoals = {
-            "lose weight",
-            "gain weight",
-            "maintain weight"
+            "Lose weight",
+            "Gain weight",
+            "Maintain weight"
     };
 
     public static final String[] foodPreferences = {
-            "atkins (high protein) diet",
-            "low protein",
-            "high fat",
-            "low fat",
-            "high calories",
-            "low calories"
+            "Atkins (high protein) diet",
+            "Low protein",
+            "Keto (high fat) diet",
+            "Low fat",
+            "High calories",
+            "Low calories"
     };
 
     public static final String[] fitnessLevels = {
-            "light intensity",
-            "moderate intensity",
-            "rigorous intensity"
+            "Light intensity",
+            "Moderate intensity",
+            "Rigorous intensity"
     };
 
     public static final String[] sleepHours = {

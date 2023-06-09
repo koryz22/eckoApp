@@ -17,6 +17,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -30,10 +32,11 @@ public class ProfileActivity extends AppCompatActivity {
     private final String domain = "eckoBackend_war";
     private final String baseURL = "http://" + host + ":" + port + "/" + domain;
 
-    public String food_goal ;
-    public String sleep_goal;
-    public int exercise_goal;
-    public String primary_goal;
+    String primary_goal = "";
+    String food_goal = "";
+    String sleep_goal = "";
+    String exercise_goal = "";
+
 
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
@@ -54,6 +57,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         //post method to grab original gender age, height, and weight
         display_profile();
+
+        // SAVE AND BACK BUTTONS
+        saveButton.setOnClickListener(v -> {
+            save(primary_goal, food_goal, exercise_goal, sleep_goal);
+            startActivity(new Intent(ProfileActivity.this, MainPageActivity.class));
+        });
         backButton.setOnClickListener(v -> startActivity(new Intent(ProfileActivity.this, MainPageActivity.class)));
 
     }
@@ -80,45 +89,41 @@ public class ProfileActivity extends AppCompatActivity {
                     String weight = js.get("weight").getAsString();
 
 //                  goals
-                    this.food_goal = js.get("food_goal").getAsString().toLowerCase();
-                    Log.d("Food Goal:", this.food_goal);
-
-                    this.sleep_goal = js.get("sleep_goal").getAsString().toLowerCase();
-                    Log.d("Sleep Goal:", this.sleep_goal);
-
-                    this.exercise_goal = js.get("exercise_goal").getAsInt();
-                    Log.d("Exercise Goal:", String.valueOf(this.exercise_goal));
-
-                    this.primary_goal = js.get("primary_goal").getAsString().toLowerCase();
+                    this.primary_goal += js.get("primary_goal").getAsString();
                     Log.d("Primary Goal:", this.primary_goal);
 
+                    this.food_goal += js.get("food_goal").getAsString();
+                    Log.d("Food Goal:", this.food_goal);
+
+                    this.exercise_goal += js.get("exercise_goal").getAsString();
+                    Log.d("Exercise Goal:", this.exercise_goal);
+
+                    this.sleep_goal += js.get("sleep_goal").getAsString();
+                    Log.d("Sleep Goal:", this.sleep_goal);
 
                     profile_username.setText(first_name + " " + last_name);
                     profile_genderAge.setText(gender + ", " + age + " years old");
-                    profile_heightWeight.setText("Height: " + height + ", Weight: " + weight);
+                    profile_heightWeight.setText("Height: " + height + " | Weight: " + weight);
+
 
                     ArrayAdapter<String> primaryGoalsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Data.primaryGoals);
                     primaryGoalsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     primaryGoalSpinner.setAdapter(primaryGoalsAdapter);
 
-                    int primaryGoalIndex = Arrays.asList(Data.primaryGoals).indexOf(primary_goal.toLowerCase());
+                    int primaryGoalIndex = Arrays.asList(Data.primaryGoals).indexOf(primary_goal);
                     primaryGoalSpinner.setSelection(primaryGoalIndex);
-
-                    String selectedPrimaryGoal;
 
                     primaryGoalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             ((TextView) parent.getChildAt(0)).setTextColor(0xFFFFFFFF);
-                            String selectedPrimaryGoal = Data.primaryGoals[position];
-                            // Use the selectedPrimaryGoal variable as needed
+                            primary_goal = Data.primaryGoals[position];
                         }
 
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
                     });
-
 
                     ArrayAdapter foodPreferencesAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Data.foodPreferences);
                     foodPreferencesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -131,10 +136,8 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             ((TextView) parent.getChildAt(0)).setTextColor(0xFFFFFFFF);
-                            String selectedFoodPreference = Data.foodPreferences[position];
-                            // Use the selectedFoodPreference variable as needed
+                            food_goal = Data.foodPreferences[position];
                         }
-
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
@@ -143,22 +146,19 @@ public class ProfileActivity extends AppCompatActivity {
                     ArrayAdapter fitnessLevelAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Data.fitnessLevels);
                     fitnessLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     fitnessLevelSpinner.setAdapter(fitnessLevelAdapter);
-
-                    fitnessLevelSpinner.setSelection(exercise_goal - 1);
+                    int defaultfitnessLevelSpinner = Arrays.asList(Data.fitnessLevels).indexOf(this.exercise_goal);
+                    fitnessLevelSpinner.setSelection(defaultfitnessLevelSpinner);
 
                     fitnessLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             ((TextView) parent.getChildAt(0)).setTextColor(0xFFFFFFFF);
-                            String selectedFitnessLevel = Data.fitnessLevels[position];
-                            // Use the selectedFitnessLevel variable as needed
+                            exercise_goal = Data.fitnessLevels[position];
                         }
-
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
                     });
-
 
                     ArrayAdapter sleepHoursAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Data.sleepHours);
                     sleepHoursAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -171,25 +171,48 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             ((TextView) parent.getChildAt(0)).setTextColor(0xFFFFFFFF);
-                            String selectedSleepHours = Data.sleepHours[position];
-                            // Use the selectedSleepHours variable as needed
+                            sleep_goal = Data.sleepHours[position];
                         }
-
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
                     });
-
-
-                    saveButton.setOnClickListener(v -> {
-                        Toast.makeText(this, "Successfully saved!", Toast.LENGTH_SHORT).show();
-                    });
                 },
                 error -> {
-                    Log.d("~~~~ LOGIN ERROR: ~~~~", error.toString());
+                    Log.d("~~~~ PROFILE GET ERROR: ~~~~", error.toString());
                 });
-
         queue.add(recordsRequest);
+    }
+
+    public void save(String primaryGoal, String foodGoal, String exerciseGoal, String sleepGoal) {
+        Log.d("~~~~~ SAVE BUTTON CLICKED ~~~~~", "");
+        Log.d("~~~~~ PRIMARY GOAL ~~~~~", primaryGoal);
+        Log.d("~~~~~ FOOD GOAL ~~~~~", foodGoal);
+        Log.d("~~~~~ EXERCISE GOAL ~~~~~", exerciseGoal);
+        Log.d("~~~~~ SLEEP GOAL ~~~~~", sleepGoal);
+        Toast.makeText(this, "Successfully saved!", Toast.LENGTH_SHORT).show();
+
+        final RequestQueue queue = NetworkManager.sharedManager(this).queue;
+        final StringRequest saveRequest = new StringRequest(
+                Request.Method.POST,
+                baseURL + "/api/profile",
+                response -> {
+                    Log.d("RESPONSE", response);
+                },
+                error -> {
+                    Log.d("~~~~ SAVE ERROR: ~~~~", error.toString());
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                final Map<String, String> params = new HashMap<>();
+                params.put("primaryGoal", primaryGoal);
+                params.put("foodGoal", foodGoal);
+                params.put("exerciseGoal", exerciseGoal);
+                params.put("sleepGoal", sleepGoal);
+                return params;
+            }
+        };
+        queue.add(saveRequest);
     }
 
 
