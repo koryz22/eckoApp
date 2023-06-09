@@ -110,6 +110,7 @@
             android:backgroundTint="@color/white"
             android:hint="Ice Hockey"
             android:textSize="15sp"
+            android:textColor="@color/white"
             android:textColorHint="@color/dark_grey"/>
 
     <ImageView

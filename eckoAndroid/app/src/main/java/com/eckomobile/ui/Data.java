@@ -21,12 +21,9 @@ public class Data {
     };
 
     public static final String[] foodPreferences = {
+            "Balanced diet",
             "Atkins (high protein) diet",
-            "Low protein",
-            "Keto (high fat) diet",
-            "Low fat",
-            "High calories",
-            "Low calories"
+            "Keto (high fat) diet"
     };
 
     public static final String[] fitnessLevels = {

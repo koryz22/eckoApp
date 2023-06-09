@@ -40,7 +40,6 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
         bottomNavigationViewFood = findViewById(R.id.bottomNavigationViewFood);
         foodRecommendation1 = findViewById(R.id.foodRecommendation1);
-        foodRecommendation1.setText("TEST FOOD \n" + "Calories: 100\n" + "Protein: 50g");
         foodRecommendation2 = findViewById(R.id.foodRecommendation2);
         foodRecommendation3 = findViewById(R.id.foodRecommendation3);
 
@@ -72,37 +71,25 @@ public class FoodActivity extends AppCompatActivity {
         foodRecommendation1.setOnClickListener(v -> {
             String foodRecOneName = foodRecommendation1.getText().toString();
             Toast.makeText(this, foodRecOneName, Toast.LENGTH_SHORT).show();
-            loadFoodListOnClick(foodRecOneName);
+            loadFoodOnAction(foodRecOneName);
         });
 
         foodRecommendation2.setOnClickListener(v -> {
             String foodRecTwoName = foodRecommendation2.getText().toString();
             Toast.makeText(this, foodRecTwoName, Toast.LENGTH_SHORT).show();
-            loadFoodListOnClick(foodRecTwoName);
+            loadFoodOnAction(foodRecTwoName);
         });
 
         foodRecommendation3.setOnClickListener(v -> {
             String foodRecThreeName = foodRecommendation3.getText().toString();
             Toast.makeText(this, foodRecThreeName, Toast.LENGTH_SHORT).show();
-            loadFoodListOnClick(foodRecThreeName);
+            loadFoodOnAction(foodRecThreeName);
         });
 
         foodSearchButton.setOnClickListener(v -> {
             String searchQuery = String.valueOf(foodSearchBox.getText());
             Log.d("SEARCH QUERY", searchQuery);
-
-            // Search corresponding foods
-            Data.foodItems.clear();
-
-            // Add data
-            /* Temporary Data */
-            Data.foodItems.add(new FoodItem("Chicken Tenders", 300, 100, 20, 6, 2));
-            Data.foodItems.add(new FoodItem("Smoked Salmon", 400, 20, 60, 12, 1));
-            Data.foodItems.add(new FoodItem("Protein Shake", 50, 30, 120, 5, 3));
-
-            FoodItemAdapter foodItemAdapter = new FoodItemAdapter(this, Data.foodItems);
-            foodSearchListView.setAdapter(foodItemAdapter);
-            foodSearchListView.setVisibility(View.VISIBLE);
+            loadFoodOnAction(searchQuery);
         });
 
         Data.foodItems.clear();
@@ -123,10 +110,6 @@ public class FoodActivity extends AppCompatActivity {
             for (int i = 0; i < js.size(); i++) {
                 JsonObject obj = js.get(i).getAsJsonObject();
                 String food = obj.get("foodName").toString().substring(1, obj.get("foodName").toString().length() - 1);
-                float cals = (int) (Float.parseFloat(obj.get("cals").toString()) / 4.2);
-                float protein = Float.parseFloat(obj.get("protein").toString());
-                float fat = Float.parseFloat(obj.get("fat").toString());
-                float carbs = Float.parseFloat(obj.get("carbs").toString());
                 if(i == 0) {
                     foodRecommendation1.setText(food);
                     // foodRecommendation1.setText(foodName + "\nCalories: " + cals + "\nProtein: " + protein + "\nCarbs: " + carbs + "g\nFat: " + fat + "g");
@@ -143,7 +126,7 @@ public class FoodActivity extends AppCompatActivity {
         queue.add(loadFoodRequest);
     }
 
-    public void loadFoodListOnClick(String foodName) {
+    public void loadFoodOnAction(String foodName) {
         String foodNameEncoded = foodName.replace(" ", "%20");
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         @SuppressLint("SetTextI18n") final StringRequest foodRequestOnClick = new StringRequest(
@@ -154,6 +137,7 @@ public class FoodActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 JsonArray js = gson.fromJson(response, JsonArray.class);
                 Log.d("ON CLICK FOOD REC JS", js.toString());
+                Data.foodItems.clear();
                 for (int i = 0; i < js.size(); i++) {
                     JsonObject obj = js.get(i).getAsJsonObject();
                     String food = obj.get("foodName").toString();
@@ -161,8 +145,6 @@ public class FoodActivity extends AppCompatActivity {
                     float protein = Float.parseFloat(obj.get("protein").toString());
                     float fat = Float.parseFloat(obj.get("fat").toString());
                     float carbs = Float.parseFloat(obj.get("carbs").toString());
-
-                    Data.foodItems.clear();
                     Data.foodItems.add(new FoodItem(food, cals, carbs, protein, fat, 1));
                     FoodItemAdapter foodItemAdapter = new FoodItemAdapter(this, Data.foodItems);
                     foodSearchListView.setAdapter(foodItemAdapter);

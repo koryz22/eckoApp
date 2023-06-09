@@ -2,7 +2,9 @@ package com.eckomobile.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ public class SleepActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationViewSleep;
     TimePicker timePicker;
     TextView sleepByTime;
+    Button sleepButton;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -24,6 +27,7 @@ public class SleepActivity extends AppCompatActivity {
         bottomNavigationViewSleep = findViewById(R.id.bottomNavigationViewSleep);
         timePicker = findViewById(R.id.timePicker);
         sleepByTime = findViewById(R.id.sleepByTime);
+        sleepButton = findViewById(R.id.sleepButton);
 
         bottomNavigationViewSleep.setSelectedItemId(R.id.sleep);
         bottomNavigationViewSleep.setOnItemSelectedListener(item -> {
@@ -76,6 +80,10 @@ public class SleepActivity extends AppCompatActivity {
 
             sleepByTime.setText(selectedTime);
             sleepByTime.setVisibility(View.VISIBLE);
+        });
+
+        sleepButton.setOnClickListener(v -> {
+            Log.d("Clicked", "Sleep Button");
         });
     }
 }

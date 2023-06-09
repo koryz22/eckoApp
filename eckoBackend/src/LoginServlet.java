@@ -51,6 +51,8 @@ public class LoginServlet extends HttpServlet {
                 String foodGoal = rs.getString("FoodGoal");
                 String exerciseGoal = rs.getString("ExerciseGoal");
                 String sleepGoal = rs.getString("SleepGoal");
+                String weight = rs.getString("Weight");
+                String height = rs.getString("Height");
 
 
                 System.out.println(user_id);
@@ -61,6 +63,8 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("foodGoal", foodGoal);
                 session.setAttribute("exerciseGoal", exerciseGoal);
                 session.setAttribute("sleepGoal", sleepGoal);
+                session.setAttribute("weight", weight);
+                session.setAttribute("height", height);
 
                 responseJsonObject.addProperty("message", "success");
                 responseJsonObject.addProperty("UserId", user_id);

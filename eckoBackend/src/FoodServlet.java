@@ -41,24 +41,39 @@ public class FoodServlet extends HttpServlet {
         int user_id = user.getUserid();
         String primaryGoal = (String) session.getAttribute("primaryGoal");
         String foodGoal = (String) session.getAttribute("foodGoal");
-        String exerciseGoal = (String) session.getAttribute("exerciseGoal");
-        String sleepGoal = (String) session.getAttribute("sleepGoal");
-
         System.out.println("primary goal: " + primaryGoal);
         System.out.println("f goal: " + foodGoal);
-        System.out.println("e goal: " + exerciseGoal);
-        System.out.println("s goal: " + sleepGoal);
 
         try (Connection conn = dataSource.getConnection()) {
             JsonArray jsonArray = new JsonArray();
             String query = "";
-            if(foodNamePassed == null || foodNamePassed.isEmpty()) {
-                if (primaryGoal.equals("Gain weight") && foodGoal.contains("Atkins")) {
-                    query = "SELECT * from food WHERE Protein < 50 ORDER BY Protein DESC LIMIT 3;";
-                }
-                // add other decision tree preference conditions here
-                // where query is changed based on conditions
 
+            if(foodNamePassed == null || foodNamePassed.isEmpty()) {
+                if(foodGoal.contains("Atkins")) {
+                    if (primaryGoal.equals("Lose weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Protein < 30 AND Calories > 1000 ORDER BY Protein DESC, Calories ASC LIMIT 3;";
+                    } else if  (primaryGoal.equals("Maintain weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Protein < 30 AND Calories < 2000 ORDER BY Protein DESC LIMIT 3;";
+                    } else if (primaryGoal.equals("Gain weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Protein > 30 AND Protein < 60 AND Calories < 4000 ORDER BY Protein DESC, Calories DESC LIMIT 3;";
+                    }
+                } else if(foodGoal.contains("Keto")) {
+                    if (primaryGoal.equals("Lose weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Fat < 40 AND Calories < 1500 ORDER BY Fat DESC LIMIT 3;";
+                    } else if  (primaryGoal.equals("Maintain weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Fat < 50 AND Calories < 2200 ORDER BY Fat DESC LIMIT 3;";
+                    } else if (primaryGoal.equals("Gain weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Fat < 60 AND Calories < 4000 ORDER BY Fat DESC LIMIT 3;";
+                    }
+                } else if(foodGoal.contains("Balanced")) {
+                    if (primaryGoal.equals("Lose weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Fat < 30 AND Protein < 30 AND Calories < 1500 ORDER BY Fat DESC LIMIT 3;";
+                    } else if  (primaryGoal.equals("Maintain weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Fat < 30 AND Protein < 30 AND Calories < 2200 ORDER BY Fat DESC LIMIT 3;";
+                    } else if (primaryGoal.equals("Gain weight")) {
+                        query = "SELECT DISTINCT * from food WHERE Fat < 30 AND Protein < 30 AND Calories < 4000 ORDER BY Fat DESC LIMIT 3;";
+                    }
+                }
 
                 PreparedStatement pStatement = conn.prepareStatement(query);
                 ResultSet rs = pStatement.executeQuery();
@@ -80,11 +95,19 @@ public class FoodServlet extends HttpServlet {
                 pStatement.close();
             } else {
                 System.out.println("Food name passed: " + foodNamePassed);
-                String query2 = "SELECT * from food WHERE FoodName = '" + foodNamePassed + "' ORDER BY Protein DESC LIMIT 1";
+                String query2 = "";
+                if (primaryGoal.equals("Lose weight")) {
+                    query2 = "SELECT * from food WHERE FoodName LIKE '" + foodNamePassed + "%' ORDER BY Fat ASC LIMIT 10";
+                } else if (primaryGoal.equals("Maintain weight")) {
+                    query2 = "SELECT * from food WHERE FoodName LIKE '" + foodNamePassed + "%' ORDER BY Calories DESC LIMIT 10 OFFSET 500";
+                } else if (primaryGoal.equals("Gain weight")) {
+                    query2 = "SELECT * from food WHERE FoodName LIKE '" + foodNamePassed + "%' ORDER BY Fat DESC LIMIT 10";
+                }
                 PreparedStatement pStatement2 = conn.prepareStatement(query2);
                 ResultSet rs2 = pStatement2.executeQuery();
-                if (rs2.next()) {
+                while (rs2.next()) {
                     String foodName = rs2.getString("FoodName");
+                    System.out.println(foodName);
                     float cals = rs2.getFloat("Calories");
                     float protein = rs2.getFloat("Protein");
                     float fat = rs2.getFloat("Fat");
@@ -97,6 +120,8 @@ public class FoodServlet extends HttpServlet {
                     jsonObject.addProperty("carbs", carbs);
                     jsonArray.add(jsonObject);
                 }
+                rs2.close();
+                pStatement2.close();
             }
             response.getWriter().write(jsonArray.toString());
         } catch(Exception e) {

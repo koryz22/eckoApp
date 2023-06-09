@@ -2,9 +2,9 @@ package com.eckomobile.ui;
 
 public class ExerciseItem {
     private String name, time;
-    private int calories;
+    private float calories;
 
-    public ExerciseItem(String exercise, int exerciseCalories, String exerciseTime) {
+    public ExerciseItem(String exercise, float exerciseCalories, String exerciseTime) {
         name = exercise;
         calories = exerciseCalories;
         time = exerciseTime;
@@ -14,7 +14,7 @@ public class ExerciseItem {
         return name;
     }
 
-    public int getCalories() {
+    public float getCalories() {
         return calories;
     }
 
