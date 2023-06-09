@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.SleepActivity"
+        android:background="@color/black">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/view">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/questionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="What time do you want to wake up tomorrow?"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:layout_marginStart="30sp"
+                    android:layout_marginEnd="30sp"
+                    android:layout_marginTop="30sp"/>
+
+            <TimePicker
+                    android:id="@+id/timePicker"
+                    android:layout_width="290dp"
+                    android:layout_height="335dp"
+                    android:layout_below="@id/questionTitle"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="30sp"
+                    android:layout_marginEnd="30sp"/>
+            <TextView
+                    android:id="@+id/sleepByTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You should sleep by:"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/timePicker"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:layout_alignStart="@id/questionTitle"/>
+
+            <TextView
+                    android:id="@+id/sleepByTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00 AM"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_below="@id/sleepByTitle"
+                    android:layout_alignStart="@id/sleepByTitle"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1sp"
+                    android:layout_below="@id/sleepByTime"
+                    android:background="@color/white"
+                    android:layout_alignStart="@id/sleepByTitle"
+                    android:layout_alignEnd="@id/sleepByTitle"/>
+        </RelativeLayout>
+    </ScrollView>
+
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:layout_above="@id/bottomNavigationViewSleep"
+            android:background="@color/white"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationViewSleep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bottom_menu"
+            android:background="@color/black"
+            app:itemTextColor="@drawable/tab_item"
+            app:itemIconTint="@drawable/tab_item"/>
+</RelativeLayout>

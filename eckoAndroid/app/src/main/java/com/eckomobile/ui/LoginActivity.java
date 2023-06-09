@@ -14,7 +14,6 @@ import com.eckomobile.databinding.ActivityLoginBinding;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.eckomobile.data.NetworkManager;
-import com.eckomobile.R;
 
 
 import java.util.HashMap;

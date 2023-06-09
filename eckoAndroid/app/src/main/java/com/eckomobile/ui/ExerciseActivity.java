@@ -43,10 +43,10 @@ public class ExerciseActivity extends AppCompatActivity {
                 case R.id.food:
                     startActivity(new Intent(ExerciseActivity.this, FoodActivity.class));
                     return true;
-//                case R.id.sleep:
-//                    startActivity(new Intent(ExerciseActivity.this, SleepActivity.class));
-//                    return true;
                 case R.id.exercise:
+                    return true;
+                case R.id.sleep:
+                    startActivity(new Intent(ExerciseActivity.this, SleepActivity.class));
                     return true;
             }
 

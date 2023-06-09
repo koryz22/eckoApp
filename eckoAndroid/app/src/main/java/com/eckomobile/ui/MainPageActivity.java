@@ -57,10 +57,9 @@ public class MainPageActivity extends AppCompatActivity {
                 case R.id.exercise:
                     startActivity(new Intent(MainPageActivity.this, ExerciseActivity.class));
                     return true;
-//                case R.id.sleep:
-//                    startActivity(new Intent(MainPageActivity.this, SleepActivity.class));
-//                    return true;
-
+                case R.id.sleep:
+                    startActivity(new Intent(MainPageActivity.this, SleepActivity.class));
+                    return true;
             }
 
             return false;
