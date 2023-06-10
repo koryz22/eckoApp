@@ -60,6 +60,7 @@ public class MainPageServlet extends HttpServlet {
                 System.out.println(food_score);
                 System.out.println(exercise_score);
                 System.out.println(sleep_score);
+
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("date", date);
                 jsonObject.addProperty("ls_score", ls_score);
@@ -94,7 +95,6 @@ public class MainPageServlet extends HttpServlet {
         System.out.println("Current date: " + formattedDate);
 
         try (Connection conn = dataSource.getConnection()) {
-//            seeing if today is already in db
             String query = "SELECT * from UserRecord WHERE UserId = ? and Date = ?";
             PreparedStatement pStatement = conn.prepareStatement(query);
             pStatement.setInt(1, user_id);

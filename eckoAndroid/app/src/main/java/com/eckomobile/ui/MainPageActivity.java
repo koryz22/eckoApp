@@ -77,7 +77,7 @@ public class MainPageActivity extends AppCompatActivity {
         final RequestQueue queue = NetworkManager.sharedManager(this).queue;
         final StringRequest recordsRequest = new StringRequest(
                 Request.Method.GET,
-                baseURL + "/api/mainPage?UserId="+ this.userId,
+                baseURL + "/api/mainPage?UserId=100000008",
                 response -> {
                     Log.d("~~~~ Main Page record: ~~~~", response);
                     Log.d("USER ID: ", Integer.toString(this.userId) );
@@ -86,6 +86,7 @@ public class MainPageActivity extends AppCompatActivity {
                     JsonArray js = gson.fromJson(response, JsonArray.class);
                     Log.d("JS", js.toString());
 
+                    Data.homeItems.clear();
                     for (int i = 0; i < js.size(); i++) {
                         JsonObject obj = js.get(i).getAsJsonObject();
                         String date = obj.get("date").toString();
@@ -96,7 +97,6 @@ public class MainPageActivity extends AppCompatActivity {
                         int sleep_score = obj.get("sleep_score").getAsInt();
                         Data.homeItems.add(new HomeItem(date, ls_score, R.drawable.lifestyle4, food_score, R.drawable.food7, exercise_score, R.drawable.exercise5, sleep_score, R.drawable.sleep3));
                     }
-
                 },
                 error -> {
                     Log.d("~~~~ LOGIN ERROR: ~~~~", error.toString());

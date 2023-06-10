@@ -28,14 +28,25 @@
                     android:layout_marginEnd="30sp"
                     android:layout_marginTop="30sp"/>
 
+<!--            <TimePicker-->
+<!--                    android:id="@+id/timePicker"-->
+<!--                    android:layout_width="300dp"-->
+<!--                    android:layout_height="340dp"-->
+<!--                    android:layout_below="@id/questionTitle"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_marginStart="30sp"-->
+<!--                    android:layout_marginEnd="30sp"/>-->
+
             <TimePicker
                     android:id="@+id/timePicker"
-                    android:layout_width="300dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="340dp"
                     android:layout_below="@id/questionTitle"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="30sp"
-                    android:layout_marginEnd="30sp"/>
+                    android:layout_marginTop="31dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:timePickerMode="clock"
+            />
             <TextView
                     android:id="@+id/sleepByTitle"
                     android:layout_width="wrap_content"
